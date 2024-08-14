@@ -4,7 +4,7 @@ import time
 # Variables for easy modification
 minyear = 2008
 maxyear = 2020
-songtitle = 'sucker'
+songtitle = 'i\'m a sucker'
 
 def search_song(song_title, min_year, max_year):
     base_url = "https://musicbrainz.org/ws/2/recording"
@@ -19,7 +19,7 @@ def search_song(song_title, min_year, max_year):
     while True:
         params = {
             "fmt": "json",
-            "query": f'title:"{song_title}" AND type:album',
+            "query": f'title:"{song_title}" AND type:album',  # Use the title as is, without quoting
             "limit": 100,  # Max limit per page
             "offset": offset
         }
@@ -55,7 +55,8 @@ def search_song(song_title, min_year, max_year):
     html_output.append("</ul>")
     html_output.append("</body></html>")
 
-    filename = "mbz_"+songtitle+".html"
+    filename = "mbz_" + songtitle.replace('.', '').replace(' ', '') + ".html"  # Remove dots for filename
+    print(filename)
     with open(filename, "w") as file:
         file.write("\n".join(html_output))
 
